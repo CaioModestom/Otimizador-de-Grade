@@ -1,0 +1,1361 @@
+{
+  "name": "Otimizador de Grade v3",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Otimizador de Grade",
+        "formDescription": "Organize  e otimize sua grade curricular de acordo com sua rotina!",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Email:",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Que horas começa o primeiro tempo?( Modelo XX:XX)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Duração de cada tempo( em minutos):",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Prioridades:",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Mais dias livres"
+                  },
+                  {
+                    "option": "Menos janelas entre aulas"
+                  },
+                  {
+                    "option": "Carga equilibrada entre os dias"
+                  },
+                  {
+                    "option": "Terminar as aulas mais cedo"
+                  },
+                  {
+                    "option": "Começar as aulas mais tarde"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "O que você quer evitar?",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aula Sexta"
+                  },
+                  {
+                    "option": "Aulas antes das 9h"
+                  },
+                  {
+                    "option": "Aulas depois das 18h"
+                  },
+                  {
+                    "option": "Janelas longas entre aulas"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Observações (opcional):",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        256,
+        0
+      ],
+      "id": "5a7761b7-349d-4597-9d5c-1841b50cb982",
+      "name": "Informações Iniciais",
+      "webhookId": "c52c79ee-c5c8-4eed-b4c0-74526a8a9dec"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "elementName": "Explicações",
+              "html": "<h2>Como adicionar matérias</h2>\n<p>Para adicionar uma matéria, coloque o nome dela, o professor, os dias da semana e os horários seguindo o formato:</p>\n<p><b>Matéria;Professor;Dia;Horário</b></p>\n<p>Caso a cadeira tenha mais de um dia, adicione-o na sequência. Quando finalizar, marque a checkbox.</p>\n<p style=\"color:#555\">Exemplo: <b>Cálculo II;Silva;Seg;08:00-09:40;Qua;08:00-09:40</b></p><!-- Your custom HTML here --->\n<p>Escolha a prioridade da matéria, matérias obrigatorias terão mais força, opcionais poderam ser deixadas de lado.</p>\n<p>Selecione sua turma preferida para dar prioridade à essa turma</p>\n<p>Escolha o que fazer caso sua turma preferida não encaixe na grade: Aceitar outra turma(Mantem a materia, mas utiliza outras turmas) ou Deixar a matéria de fora(Se sua turma preferida não couber, a matéria é excluida da grade)</p> "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        688,
+        0
+      ],
+      "id": "b1c3435b-3ac0-4f36-936e-4d594622dd68",
+      "name": "Instruções",
+      "webhookId": "1c67ee17-534a-4506-b36c-8ca8841991d8"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Finalizar!",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Finalizei minha grade!"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        928,
+        0
+      ],
+      "id": "8e7f1358-2bf8-41ac-a50f-874479cea0a1",
+      "name": "Matéria",
+      "webhookId": "d718af79-fd86-4ef7-a788-5caadff79fa2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6a1094c-49a9-42b9-94ca-537aadcdb577",
+              "leftValue": "={{ ($json['Finalizar!'] || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "5021f0f8-e97c-42db-bdfd-764f8f283d2c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Obrigado!",
+        "completionMessage": "Suas opções de grade serão enviadas por email.\nBom Semestre!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        4480,
+        0
+      ],
+      "id": "8c350adf-80a4-4611-9b1c-33377275b286",
+      "name": "Form",
+      "webhookId": "74be8eb7-83b0-4129-a5cb-c6146f2582d6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6a1094c-49a9-42b9-94ca-537aadcdb577",
+              "leftValue": "={{ ($json['Finalizar!'] || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1536,
+        96
+      ],
+      "id": "a2015924-db2e-41d7-8ce3-d43ffa1db92e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6a1094c-49a9-42b9-94ca-537aadcdb577",
+              "leftValue": "={{ ($json['Finalizar!'] || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1904,
+        112
+      ],
+      "id": "4df02124-8c92-4300-8927-4dafd461e1ae",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6a1094c-49a9-42b9-94ca-537aadcdb577",
+              "leftValue": "={{ ($json['Finalizar!'] || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2272,
+        128
+      ],
+      "id": "6d56327e-54c4-415b-a9ab-e2ce2d2b2027",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a6a1094c-49a9-42b9-94ca-537aadcdb577",
+              "leftValue": "={{ ($json['Finalizar!'] || []).length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2656,
+        144
+      ],
+      "id": "252795aa-d169-4743-889e-59c0f8532334",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Você é um orientador acadêmico que ajuda um aluno a escolher a melhor grade horária.\n \nO código já montou as grades possíveis e garantiu que TODAS estão corretas: nenhuma tem aulas sobrepostas, nenhuma bate com os compromissos do aluno e o deslocamento de 1 hora ANTES de cada compromisso já foi considerado. Sua tarefa é ESCOLHER entre elas e EXPLICAR a escolha. Você nunca cria nem altera horários.\n \nDADOS DO ALUNO\n- Tempos de aula de {{ $json.duracaoTempo }} minutos, o primeiro começando às {{ $json.inicioPrimeiroTempo }}.\n- Compromissos fixos (já com o deslocamento antes de cada um): {{ JSON.stringify($json.compromissosParaIA) }}\n- Prioridades marcadas, em ordem: {{ JSON.stringify($json.prioridadesTexto || []) }}\n- O que o aluno quer evitar: {{ JSON.stringify($json.evitarTexto || []) }}\n- Observação livre do aluno: {{ JSON.stringify($json.observacoes || '') }}\n \nFAMÍLIAS\nAs grades estão organizadas em famílias. Todas as grades de uma família têm as mesmas matérias; uma família que deixa uma matéria de fora existe porque essa matéria não cabe junto com outra. As famílias estão na ordem de importância para o aluno.\n{{ JSON.stringify($json.familias.map(f => ({ familia: f.familia, matériasQueFicamDeFora: f.foraDe, candidatas: f.candidatas }))) }}\n \nGRADES CANDIDATAS (cada uma tem \"indice\", \"familia\", as aulas, métricas, e o que o aluno pediu que foi ou não atendido)\n{{ JSON.stringify($json.candidatasParaIA) }}\n \nCOMO ESCOLHER\n1. Escolha apenas entre as candidatas listadas e cite sempre o número do campo \"indice\". Nunca invente horários.\n2. De cada família, escolha até {{ $json.maxOpcoesPorFamilia }} grades. Se a família tiver menos grades boas, escolha menos. Não deixe nenhuma família sem pelo menos uma grade.\n3. Dentro da mesma família, escolha grades DIFERENTES entre si (dias livres, janelas entre aulas, horário de início e de fim, distribuição da carga). Não repita um perfil só porque ele é bom.\n4. Siga o que o aluno pediu: dê preferência às grades que atendem as prioridades, na ordem em que foram marcadas, e que evitam o que ele quer evitar. Use \"metricas\", \"preferenciasAtendidas\", \"preferenciasNaoAtendidas\" e \"evitarNaoEvitado\". Considere também a observação livre.\n5. Mesmo com prioridades marcadas, inclua pelo menos uma grade com um perfil diferente do priorizado, para o aluno ver uma alternativa.\n \nREGRAS SECUNDÁRIAS (desempate)\nUse esta ordem quando o aluno não marcou prioridades, e também para desempatar grades que atendem igualmente ao que ele pediu:\na) mais dias livres, em especial a sexta-feira livre, depois outros dias livres;\nb) menos minutos de janela entre as aulas;\nc) carga de aulas equilibrada entre os dias;\nd) evitar aulas muito cedo (antes das 8h) e muito tarde (depois das 20h);\ne) terminar o dia mais cedo.\nSe uma observação livre do aluno contradiz uma regra secundária (por exemplo, \"prefiro aula na sexta\"), vale a observação do aluno.\n \nCOMO ESCREVER\n- \"titulo\": até 6 palavras, que descrevam o perfil (por exemplo: \"Sextas livres e poucas janelas\").\n- \"resumo\": 1 ou 2 frases sobre o que a grade oferece e como ela atende ao que o aluno pediu.\n- \"tradeoffs\": 1 frase com o que o aluno perde ou precisa saber (uma janela longa, aula cedo, preferência que não coube). Se não houver, deixe uma frase curta dizendo isso.\n- Não repita nos textos a lista de matérias que ficaram de fora: o e-mail já explica isso por família.\n- Português do Brasil, tom simples e direto.\n \nRESPONDA SOMENTE COM JSON VÁLIDO, sem texto antes ou depois, neste formato:\n{\"opcoes\":[{\"candidata\":0,\"titulo\":\"...\",\"resumo\":\"...\",\"tradeoffs\":\"...\"}]}"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        3552,
+        0
+      ],
+      "id": "cd168560-7e78-4839-98f2-154fc4cf10d7",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sjY3mBNdXii9bkOd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const NO_GERADOR = 'Gerador'; // nome do nó Code que gerou as grades candidatas\n \nconst resposta = $input.first().json;\nconst gerador = $(NO_GERADOR).first().json;\nconst candidatas = gerador.candidatas || [];\nconst candidatasParaIA = gerador.candidatasParaIA || [];\nconst familias = gerador.familias || [];\nconst maxPorFamilia = gerador.maxOpcoesPorFamilia || 3;\n \nconst avisos = [];\n \n// 1. Achar o texto da resposta.\nfunction acharTexto(obj) {\n  const caminhos = [\n    obj && obj.content && obj.content.parts,\n    obj && obj.candidates && obj.candidates[0] && obj.candidates[0].content && obj.candidates[0].content.parts,\n  ];\n  for (const parts of caminhos) {\n    if (Array.isArray(parts)) {\n      const t = parts.map(p => (p && p.text) || '').join('');\n      if (t.trim()) return t;\n    }\n  }\n  for (const k of ['output', 'text', 'response', 'message']) {\n    if (obj && typeof obj[k] === 'string' && obj[k].trim()) return obj[k];\n  }\n  const buscar = v => {\n    if (typeof v === 'string') return v.includes('opcoes') ? v : null;\n    if (v && typeof v === 'object') {\n      for (const x of Object.values(v)) {\n        const r = buscar(x);\n        if (r) return r;\n      }\n    }\n    return null;\n  };\n  return buscar(obj);\n}\n \n// 2. Ler o JSON, mesmo com cercas de markdown ou texto em volta.\nfunction lerJson(texto) {\n  if (!texto) return null;\n  let t = String(texto).trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  try { return JSON.parse(t); } catch (e) { /* tenta o recorte abaixo */ }\n  const a = t.indexOf('{');\n  const b = t.lastIndexOf('}');\n  if (a >= 0 && b > a) {\n    try { return JSON.parse(t.slice(a, b + 1)); } catch (e) { /* sem JSON válido */ }\n  }\n  return null;\n}\n \n// 3. Validar as opções por família.\nconst texto = acharTexto(resposta);\nconst json = lerJson(texto);\nconst opcoes = [];\nlet origem = 'ia';\n \nif (!json || !Array.isArray(json.opcoes)) {\n  avisos.push('A resposta da IA não pôde ser lida como JSON com \"opcoes\"; foram usadas opções automáticas');\n} else {\n  const usadas = new Set();\n  const porFamilia = {};\n  for (const o of json.opcoes) {\n    const c = Number(o && o.candidata);\n    if (!Number.isInteger(c) || c < 0 || c >= candidatas.length) {\n      avisos.push(`Opção ignorada: candidata \"${o && o.candidata}\" não existe`);\n      continue;\n    }\n    if (usadas.has(c)) {\n      avisos.push(`Opção ignorada: a candidata ${c} apareceu repetida`);\n      continue;\n    }\n    const f = candidatas[c].familia;\n    if ((porFamilia[f] || 0) >= maxPorFamilia) {\n      avisos.push(`Opção ignorada: a candidata ${c} passa do máximo de ${maxPorFamilia} opções da combinação ${f}`);\n      continue;\n    }\n    usadas.add(c);\n    porFamilia[f] = (porFamilia[f] || 0) + 1;\n    opcoes.push({\n      candidata: c,\n      familia: f,\n      titulo: String((o && o.titulo) || '').trim(),\n      resumo: String((o && o.resumo) || '').trim(),\n      tradeoffs: String((o && o.tradeoffs) || '').trim(),\n    });\n  }\n}\n \n// 4. Plano B: texto automático a partir das métricas.\nfunction automatica(indice) {\n  const c = candidatasParaIA[indice] || {};\n  const m = c.metricas || {};\n  const dias = (m.diasComAula || []).join(', ');\n  const partes = [`${m.materias} matéria(s), aulas das ${m.primeiraAula} às ${m.ultimaAula}`];\n  if (dias) partes.push(`dias com aula: ${dias}`);\n  partes.push(m.janelasMinutos ? `${m.janelasMinutos} min de janelas entre as aulas` : 'sem janelas entre as aulas');\n  return { candidata: indice, familia: c.familia, titulo: '', resumo: partes.join('. ') + '.', tradeoffs: '' };\n}\n \n// Completa cada família até o máximo de opções (as escolhas da IA sempre ficam; o código só preenche o que faltou,\n// usando as melhores grades ainda não escolhidas da própria família).\nconst temIA = opcoes.length > 0;\nif (temIA === false) origem = 'automatico';\nlet acrescentou = false;\nfor (const f of familias) {\n  const alvo = Math.min(f.maxOpcoes || maxPorFamilia, f.candidatas.length);\n  const daFamilia = opcoes.filter(o => o.familia === f.familia).length;\n  const livres = f.candidatas.filter(c => !opcoes.some(o => o.candidata === c));\n  const precisa = Math.max(0, alvo - daFamilia);\n  for (const c of livres.slice(0, precisa)) {\n    opcoes.push(automatica(c));\n    acrescentou = true;\n  }\n  if (temIA && precisa) {\n    avisos.push(daFamilia\n      ? `A IA escolheu ${daFamilia} grade(s) da combinação ${f.familia}; o código completou até ${alvo}`\n      : `A IA não escolheu nenhuma grade da combinação ${f.familia}; foram acrescentadas as melhores opções dela`);\n  }\n}\nif (temIA && acrescentou) origem = 'ia+automatico';\nopcoes.sort((a, b) => a.familia - b.familia);\n \nreturn [{ json: {\n  opcoes,\n  origemOpcoes: origem,\n  validacaoAvisos: avisos,\n  temOpcoes: opcoes.length > 0,\n  candidatas,\n  familias,\n  estagio: gerador.estagio || [],\n  tempos: gerador.tempos || [],\n  emailAluno: gerador.emailAluno || '',\n  prioridadesTexto: gerador.prioridadesTexto || [],\n  evitarTexto: gerador.evitarTexto || [],\n  observacoes: gerador.observacoes || '',\n  avisosAluno: gerador.avisosAluno || [],\n  // Problemas das etapas anteriores, para o e-mail explicar quando não há nenhuma grade possível.\n  problemas: [...(gerador.preparoErros || []), ...(gerador.geradorErros || []), ...(gerador.preparoAvisos || []), ...(gerador.geradorAvisos || [])],\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3872,
+        0
+      ],
+      "id": "42321053-679e-4886-a482-f00b5857b1f5",
+      "name": "Validar IA"
+    },
+    {
+      "parameters": {
+        "fromEmail": "caiomodestom@gmail.com",
+        "toEmail": "={{ $json.emailAluno }}",
+        "subject": "={{ $json.assunto }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "fileAttachments": "data"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        4272,
+        0
+      ],
+      "id": "145fbe01-c02d-49a6-897b-9aba6112ecb5",
+      "name": "Send an Email",
+      "webhookId": "636df74e-bf14-4add-afd9-f2298e3c5fcc",
+      "credentials": {
+        "smtp": {
+          "id": "TXqBexpOSrhMk31o",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const MAX_POOL_POR_FAMILIA = 6;   // grades que o Gemini pode escolher em cada família\nconst MAX_OPCOES_POR_FAMILIA = 3; // máximo que o aluno recebe de cada família\nconst MAX_FAMILIAS = 5;\nconst MAX_TOTAL_OPCOES = 9;       // teto de grades no e-mail e no arquivo\nconst LIMITE_COMBINACOES = 200000;\nconst PESO_BUSCA = { obrigatoria: 1000, preferida: 1, opcional: 1 }; // o que a busca maximiza: obrigatórias, depois quantidade\nconst PESO_ORDEM = { obrigatoria: 100, preferida: 10, opcional: 1 };   // como as famílias são ordenadas\n \nconst HORA_CEDO = 9 * 60;    // \"evitar aulas antes das 9h\"\nconst HORA_NOITE = 18 * 60;  // \"evitar aulas depois das 18h\"\nconst JANELA_LONGA = 90;     // \"evitar janelas longas\": mais de 90 minutos entre duas aulas\n \n// Diferença mínima entre duas grades da mesma família (basta uma delas valer):\nconst DIF_JANELAS = 60;  // minutos de janela\nconst DIF_HORARIO = 60;  // primeira ou última aula\nconst DIF_CARGA = 90;    // diferença de carga entre os dias (a diferença, não a carga)\n \nconst DIAS_UTEIS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];\nconst ORDEM_DIAS = [...DIAS_UTEIS, 'Sáb'];\nconst TEXTO_EVITAR = { cedo9: 'aulas antes das 9h', noite18: 'aulas depois das 18h', janelasLongas: 'janela longa entre aulas (mais de 90 min)' };\n \nconst item = $input.first().json;\nconst materias = item.materias || [];\nconst restricoes = item.restricoes || [];\nconst tempos = item.tempos || [];\nconst prioridades = item.prioridades || [];\nconst evitar = item.evitar || [];\n \nconst erros = [];\nconst avisos = [];\nconst avisosAluno = [];\n \nconst fmt = min => String(Math.floor(min / 60)).padStart(2, '0') + ':' + String(min % 60).padStart(2, '0');\nconst conflita = (a, b) => a.dia === b.dia && a.inicio < b.fim && b.inicio < a.fim;\nconst conflitaTurmas = (a, b) => a.blocos.some(x => b.blocos.some(y => conflita(x, y)));\n \n// ------------------------------------------------------------- 1. Turmas que cabem\nconst lista = [];\nfor (const m of materias) {\n  let validas = m.opcoes.filter(o => !o.blocos.some(b => restricoes.some(r => conflita(b, r))));\n  let motivo = 'todas as turmas conflitam com os seus compromissos';\n  if (m.turmaPreferida && m.seNaoCouber === 'fora') {\n    const preferida = validas.filter(o => o.rotulo === m.turmaPreferida);\n    if (validas.length && !preferida.length) motivo = `a turma preferida (${m.turmaPreferida}) conflita com os seus compromissos e você pediu para deixar a matéria de fora nesse caso`;\n    validas = preferida;\n  }\n  if (!validas.length) {\n    avisos.push(`${m.nome}: ${motivo}`);\n    avisosAluno.push(`${m.prioridade === 'obrigatoria' ? 'A matéria obrigatória ' : 'A matéria '}${m.nome} não entrou em nenhuma grade: ${motivo}.`);\n    continue;\n  }\n  lista.push({ ...m, validas, peso: PESO_BUSCA[m.prioridade] || 1, pesoOrdem: PESO_ORDEM[m.prioridade] || PESO_ORDEM.preferida });\n}\n \n// Pares de matérias totalmente incompatíveis (toda turma de uma bate com toda turma da outra).\nconst incompativeis = {};\nfor (const x of lista) {\n  incompativeis[x.nome] = lista.filter(y => y !== x && x.validas.every(tx => y.validas.every(ty => conflitaTurmas(tx, ty)))).map(y => y.nome);\n}\n \n// ------------------------------------------------------------------ 2. Busca\n// Para cada matéria: escolhe uma turma ou deixa a matéria de fora. Guarda só as combinações de maior peso de busca.\nconst n = lista.length;\nconst sufixo = new Array(n + 1).fill(0);\nfor (let i = n - 1; i >= 0; i--) sufixo[i] = sufixo[i + 1] + lista[i].peso;\n \nlet melhor = -1;\nlet resultados = [];\nlet contador = 0;\nlet estourou = false;\n \nfunction busca(i, escolhidas, blocos, peso) {\n  if (estourou || peso + sufixo[i] < melhor) return;\n  if (i === n) {\n    if (++contador > LIMITE_COMBINACOES) { estourou = true; return; }\n    if (peso > melhor) { melhor = peso; resultados = []; }\n    resultados.push(escolhidas.slice());\n    return;\n  }\n  for (const o of lista[i].validas) {\n    if (o.blocos.some(b => blocos.some(c => conflita(b, c)))) continue;\n    escolhidas.push({ materia: lista[i], opcao: o });\n    busca(i + 1, escolhidas, blocos.concat(o.blocos), peso + lista[i].peso);\n    escolhidas.pop();\n  }\n  busca(i + 1, escolhidas, blocos, peso);\n}\n \nif (!materias.length) erros.push('Nenhuma matéria foi informada');\nelse if (!n) erros.push('Nenhuma matéria cabe nos seus compromissos');\nelse busca(0, [], [], 0);\nif (estourou) avisos.push('Há combinações demais; as grades vêm de uma amostra delas');\n \n// -------------------------------------------------------------- 3. Famílias\nconst grupos = new Map();\nfor (const r of resultados) {\n  const dentro = new Set(r.map(e => e.materia.nome));\n  const fora = lista.map(m => m.nome).filter(nome => !dentro.has(nome));\n  const chave = fora.join('|');\n  if (!grupos.has(chave)) grupos.set(chave, { foraDe: fora, pesoOrdem: lista.filter(m => dentro.has(m.nome)).reduce((soma, m) => soma + m.pesoOrdem, 0), grades: [] });\n  grupos.get(chave).grades.push(r);\n}\n \n// Métricas de uma grade (r = [{ materia, opcao }]).\nfunction analisar(r) {\n  const porDia = {};\n  for (const e of r) for (const b of e.opcao.blocos) (porDia[b.dia] = porDia[b.dia] || []).push(b);\n \n  const janelasPorDia = {};\n  const minutosDeAulaPorDia = {};\n  let janelas = 0;\n  let janelaMaxima = 0;\n  let primeiro = Infinity;\n  let ultimo = 0;\n  let antes9 = 0;\n  let depois18 = 0;\n  for (const [d, aulas] of Object.entries(porDia)) {\n    aulas.sort((a, b) => a.inicio - b.inicio);\n    let j = 0;\n    let total = 0;\n    aulas.forEach((b, k) => {\n      total += b.fim - b.inicio;\n      if (k > 0) {\n        const vao = Math.max(0, b.inicio - aulas[k - 1].fim);\n        j += vao;\n        janelaMaxima = Math.max(janelaMaxima, vao);\n      }\n      primeiro = Math.min(primeiro, b.inicio);\n      ultimo = Math.max(ultimo, b.fim);\n      antes9 += Math.max(0, Math.min(b.fim, HORA_CEDO) - b.inicio);\n      depois18 += Math.max(0, b.fim - Math.max(b.inicio, HORA_NOITE));\n    });\n    janelasPorDia[d] = j;\n    minutosDeAulaPorDia[d] = total;\n    janelas += j;\n  }\n  const cargas = Object.values(minutosDeAulaPorDia);\n \n  const atendidas = [];\n  const naoAtendidas = [];\n  for (const e of r) {\n    if (!e.materia.turmaPreferida) continue;\n    const horarios = e.opcao.blocos.map(b => `${b.dia} ${fmt(b.inicio)}`).join(', ');\n    const texto = `${e.materia.nome}: turma preferida${e.opcao.professor ? ' (' + e.opcao.professor + ', ' + horarios + ')' : ''}`;\n    (e.opcao.rotulo === e.materia.turmaPreferida ? atendidas : naoAtendidas).push(\n      e.opcao.rotulo === e.materia.turmaPreferida ? texto : `${e.materia.nome}: foi usada outra turma, a preferida não coube com as demais`);\n  }\n  const violado = [];\n  if (evitar.includes('cedo9') && antes9 > 0) violado.push('cedo9');\n  if (evitar.includes('noite18') && depois18 > 0) violado.push('noite18');\n  if (evitar.includes('janelasLongas') && janelaMaxima > JANELA_LONGA) violado.push('janelasLongas');\n \n  return {\n    materias: r.length,\n    diasComAula: ORDEM_DIAS.filter(d => porDia[d]),\n    diasLivres: DIAS_UTEIS.filter(d => !porDia[d]),\n    janelasMinutos: janelas,\n    janelasPorDia,\n    minutosDeAulaPorDia,\n    diferencaCargaMinutos: cargas.length ? Math.max(...cargas) - Math.min(...cargas) : 0,\n    primeiraAula: fmt(primeiro),\n    ultimaAula: fmt(ultimo),\n    _ini: primeiro,\n    _fim: ultimo,\n    _atendidas: atendidas,\n    _naoAtendidas: naoAtendidas,\n    _violado: violado,\n  };\n}\n \n// Critérios de escolha: primeiro as preferências e o que evitar, depois o critério da vez.\nconst antesDe = (a, b) => b.m._atendidas.length - a.m._atendidas.length || a.m._violado.length - b.m._violado.length;\nconst CRITERIOS = {\n  janelas: (a, b) => a.m.janelasMinutos - b.m.janelasMinutos || b.m.diasLivres.length - a.m.diasLivres.length,\n  diasLivres: (a, b) => b.m.diasLivres.length - a.m.diasLivres.length || a.m.janelasMinutos - b.m.janelasMinutos,\n  carga: (a, b) => a.m.diferencaCargaMinutos - b.m.diferencaCargaMinutos || a.m.janelasMinutos - b.m.janelasMinutos,\n  cedo: (a, b) => a.m._fim - b.m._fim || a.m.janelasMinutos - b.m.janelasMinutos,\n  tarde: (a, b) => b.m._ini - a.m._ini || a.m.janelasMinutos - b.m.janelasMinutos,\n};\n// As prioridades do aluno entram primeiro e de novo no fim, ganhando mais vagas; os demais critérios continuam presentes.\nconst PADRAO = Object.keys(CRITERIOS);\nconst sequencia = [...prioridades, ...PADRAO.filter(c => !prioridades.includes(c)), ...prioridades];\n \nconst diferentes = (a, b) =>\n  a.m.diasLivres.join() !== b.m.diasLivres.join() ||\n  Math.abs(a.m.janelasMinutos - b.m.janelasMinutos) >= DIF_JANELAS ||\n  Math.abs(a.m._ini - b.m._ini) >= DIF_HORARIO ||\n  Math.abs(a.m._fim - b.m._fim) >= DIF_HORARIO ||\n  Math.abs(a.m.diferencaCargaMinutos - b.m.diferencaCargaMinutos) >= DIF_CARGA;\n \nfunction montarPool(grades) {\n  const analisadas = grades.map(r => ({ r, m: analisar(r) }));\n  const pool = [];\n  let avancou = true;\n  while (pool.length < MAX_POOL_POR_FAMILIA && avancou) {\n    avancou = false;\n    for (const criterio of sequencia) {\n      if (pool.length >= MAX_POOL_POR_FAMILIA) break;\n      const cmp = (a, b) => antesDe(a, b) || CRITERIOS[criterio](a, b);\n      let prox = null;\n      for (const x of analisadas) {\n        if (pool.includes(x) || !pool.every(p => diferentes(p, x))) continue;\n        if (!prox || cmp(x, prox) < 0) prox = x;\n      }\n      if (prox) { pool.push(prox); avancou = true; }\n    }\n  }\n  return pool;\n}\n \nlet familias = [...grupos.values()].map(g => ({ foraDe: g.foraDe, pesoOrdem: g.pesoOrdem, totalDeGrades: g.grades.length, pool: montarPool(g.grades) }));\nfamilias.sort((a, b) => b.pesoOrdem - a.pesoOrdem || antesDe(a.pool[0], b.pool[0]) || a.foraDe.join().localeCompare(b.foraDe.join()));\nif (familias.length > MAX_FAMILIAS) {\n  avisos.push(`Há ${familias.length} combinações de matérias possíveis; foram mantidas as ${MAX_FAMILIAS} primeiras`);\n  avisosAluno.push(`Existem outras combinações de matérias além das mostradas (${familias.length} no total); marque prioridades para ver as que mais importam.`);\n  familias = familias.slice(0, MAX_FAMILIAS);\n}\nconst maxOpcoesPorFamilia = familias.length ? Math.max(1, Math.min(MAX_OPCOES_POR_FAMILIA, Math.floor(MAX_TOTAL_OPCOES / familias.length))) : 0;\n \nfor (const f of familias) {\n  for (const nome of f.foraDe) {\n    const m = lista.find(x => x.nome === nome);\n    if (m && m.prioridade === 'obrigatoria') avisosAluno.push(`Não foi possível incluir a matéria obrigatória ${nome} em uma das combinações.`);\n  }\n}\n \n// ----------------------------------------------------------------- 4. Saída\nconst candidatas = [];\nconst candidatasParaIA = [];\nconst familiasSaida = familias.map((f, fi) => {\n  const indices = [];\n  for (const { r, m } of f.pool) {\n    const indice = candidatas.length;\n    indices.push(indice);\n    candidatas.push({\n      familia: fi,\n      foraDe: f.foraDe,\n      materias: r.map(e => ({ nome: e.materia.nome, codigo: e.opcao.professor || '', blocos: e.opcao.blocos.map(b => ({ dia: b.dia, inicio: b.inicio, fim: b.fim })) })),\n      preferenciasAtendidas: m._atendidas,\n      preferenciasNaoAtendidas: m._naoAtendidas,\n      evitarNaoEvitado: m._violado.map(c => TEXTO_EVITAR[c]),\n    });\n    const { _ini, _fim, _atendidas, _naoAtendidas, _violado, ...metricas } = m;\n    candidatasParaIA.push({\n      indice,\n      familia: fi,\n      materias: r.map(e => ({\n        nome: e.materia.nome,\n        professor: e.opcao.professor || '',\n        aulas: e.opcao.blocos.map(b => ({ dia: b.dia, inicio: fmt(b.inicio), fim: fmt(b.fim) })),\n      })),\n      metricas,\n      preferenciasAtendidas: _atendidas,\n      preferenciasNaoAtendidas: _naoAtendidas,\n      evitarNaoEvitado: _violado.map(c => TEXTO_EVITAR[c]),\n    });\n  }\n  return {\n    familia: fi,\n    incluidas: f.pool[0].r.map(e => e.materia.nome),\n    foraDe: f.foraDe,\n    pesoPrioridade: f.pesoOrdem,\n    incompativeis: Object.fromEntries(f.foraDe.map(nome => [nome, incompativeis[nome] || []])),\n    totalDeGrades: f.totalDeGrades,\n    maxOpcoes: maxOpcoesPorFamilia,\n    candidatas: indices,\n  };\n});\n \nconst compromissosParaIA = restricoes.map(r => ({ dia: r.dia, inicio: fmt(r.inicio), fim: fmt(r.fim) }));\n \nreturn [{ json: {\n  ...item,\n  candidatas,\n  candidatasParaIA,\n  familias: familiasSaida,\n  maxOpcoesPorFamilia,\n  compromissosParaIA,\n  estagio: restricoes,\n  duracaoTempo: tempos.length ? tempos[0].fim - tempos[0].inicio : null,\n  inicioPrimeiroTempo: tempos.length ? fmt(tempos[0].inicio) : '',\n  avisosAluno,\n  geradorErros: erros,\n  geradorAvisos: avisos,\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3376,
+        0
+      ],
+      "id": "a4bd314b-7c2c-4977-9c6d-1fe1d1f1d112",
+      "name": "Gerador"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "elementName": "Instruções",
+              "html": "<!<h2>Quais dias você tem um compromisso fixo?</h2>\n<p>Adicione-os no formato: <b>XX:XX-XX:XX</b>, indicando o começo e fim do compromisso. Em casos de mais de um por dia, separe os horários por vírgulas.</p>\n<p style=\"color:#555\">Exemplo: <b>14-18, 20-22</b></p>\n\n\n"
+            },
+            {
+              "fieldLabel": "Segunda:"
+            },
+            {
+              "fieldLabel": "Terça:"
+            },
+            {
+              "fieldLabel": "Quarta:"
+            },
+            {
+              "fieldLabel": "Quinta:"
+            },
+            {
+              "fieldLabel": "Sexta:"
+            }
+          ]
+        },
+        "limitWaitTime": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        464,
+        0
+      ],
+      "id": "20ca4559-7a35-4d00-bcef-c6caf2a4e875",
+      "name": "Bloqueios",
+      "webhookId": "86fae485-c263-4a77-9982-b8daa246ccec"
+    },
+    {
+      "parameters": {
+        "jsCode": "const NO_FORMULARIO = 'Informações Iniciais'; // Form Trigger (e-mail, início e duração dos tempos)\nconst NO_BLOQUEIOS = 'Bloqueios';             // página com um campo de texto por dia da semana\nconst NO_MATERIA = 'Matéria';                 // páginas de matéria: Matéria, Matéria1, Matéria2, ...\nconst MAX_MATERIAS = 6;                       // quantas páginas de matéria existem no formulário\nconst DESLOCAMENTO_ANTES = 60;                // minutos bloqueados ANTES de cada compromisso\nconst PADRAO = { duracao: 50, inicio: '07:00', fim: '22:00' }; // usados se o campo não existir ou ficar vazio\n \nconst item = $input.first().json;\nconst erros = [];\nconst avisos = [];\n \nconst ler = nome => { try { return $(nome).first().json; } catch (e) { return null; } }; // null = página não exibida\nconst norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();\nconst fmt = min => String(Math.floor(min / 60)).padStart(2, '0') + ':' + String(min % 60).padStart(2, '0');\n \n// Hora com minutos opcionais: 14, 14h, 14:30, 14h30. Intervalo: 14-16, 14h às 16h30...\nconst HORA = '(\\\\d{1,2})(?:\\\\s*(?::|h)\\\\s*(\\\\d{2}))?\\\\s*h?';\nconst INTERVALO = new RegExp(`^${HORA}\\\\s*(?:-|–|—|a|às|até)\\\\s*${HORA}$`, 'i');\n \n// Converte um intervalo em { inicio, fim } (minutos) ou { erro }.\nfunction intervalo(texto) {\n  const m = texto.match(INTERVALO);\n  if (!m) return { erro: 'está em formato inválido. Use, por exemplo: 14:30-16:10' };\n  const inicio = Number(m[1]) * 60 + Number(m[2] || 0);\n  const fim = Number(m[3]) * 60 + Number(m[4] || 0);\n  if (Number(m[2] || 0) > 59 || Number(m[4] || 0) > 59 || inicio >= fim || fim > 1440) {\n    return { erro: 'é um horário inválido (minutos de 00 a 59, início menor que o fim, até 24:00)' };\n  }\n  return { inicio, fim };\n}\n \n// ---------------------------------------------------------------- Tempos\nconst inicial = ler(NO_FORMULARIO) || item;\nconst chaves = Object.keys(inicial).filter(k => k !== 'submittedAt' && k !== 'formMode');\nconst usadas = new Set();\nconst achar = padroes => {\n  for (const p of padroes) {\n    const k = chaves.find(c => !usadas.has(c) && p.test(norm(c)));\n    if (k) { usadas.add(k); return k; }\n  }\n  return null;\n};\nconst vazio = v => v === undefined || v === null || String(v).trim() === '' || typeof v === 'object';\n \n// Prioridades, o que evitar e observações (opcionais). São reservados antes dos campos dos tempos, para que um\n// texto como \"não quero aula no primeiro tempo\" não seja confundido com o horário do primeiro tempo.\nconst kPrior = achar([/priori/]);\nconst kEvitar = achar([/evit/]);\nconst kObs = achar([/observ/]);\nconst marcados = chave => {\n  const v = chave === null ? [] : inicial[chave];\n  return (Array.isArray(v) ? v : String(v ?? '').split(/[,;\\n]/)).map(x => String(x).trim()).filter(Boolean);\n};\nconst codigos = (lista, regras) => [...new Set(lista.map(t => { const r = regras.find(([, re]) => re.test(norm(t))); return r ? r[0] : null; }).filter(Boolean))];\nconst prioridadesTexto = marcados(kPrior);\nconst evitarTexto = marcados(kEvitar);\nconst prioridades = codigos(prioridadesTexto, [['janelas', /janela/], ['diasLivres', /dias? livre/], ['carga', /carga|equilibr/], ['cedo', /terminar|cedo/], ['tarde', /comecar|tarde/]]);\nconst evitar = codigos(evitarTexto, [['cedo9', /antes/], ['noite18', /depois|noite/], ['janelasLongas', /janela/]]);\nconst observacoes = kObs && !vazio(inicial[kObs]) ? String(inicial[kObs]).trim() : '';\nfor (const [lista, codigosLista, nome] of [[prioridadesTexto, prioridades, 'prioridade'], [evitarTexto, evitar, 'evitar']]) {\n  if (lista.length > codigosLista.length) avisos.push(`Primeira página: alguma opção de ${nome} não foi reconhecida (recebido: ${lista.join(' | ')})`);\n}\n \nconst kDuracao = achar([/durac/, /minut/, /cada (tempo|aula)/]);\nconst kFim = achar([/termin/, /ultimo/, /\\bfim\\b/, /encerr/]);\nconst kInicio = achar([/primeir/, /inicio/, /comec/]);\nconst kEmail = chaves.find(c => /mail/.test(norm(c)));\n \nfunction valorDe(chave, padrao, descricao) {\n  if (chave === null || vazio(inicial[chave])) {\n    avisos.push(chave === null\n      ? `Tempos: nenhum campo de ${descricao} foi encontrado; usando o padrão (${padrao}). Campos recebidos: ${chaves.join(' | ') || '(nenhum)'}`\n      : `Tempos: o campo \"${chave}\" está vazio; usando o padrão (${padrao})`);\n    return padrao;\n  }\n  return inicial[chave];\n}\n \nconst brutaDuracao = valorDe(kDuracao, PADRAO.duracao, 'duração dos tempos');\nconst numero = String(brutaDuracao).match(/\\d+/);\nconst duracao = numero ? Number(numero[0]) : NaN;\nif (!Number.isInteger(duracao) || duracao < 10 || duracao > 240) {\n  erros.push(`Tempos: a duração deve ser um número inteiro de minutos entre 10 e 240 (recebido: \"${brutaDuracao}\")`);\n}\n \nconst horaDe = (texto, rotulo) => {\n  const m = String(texto).trim().match(/^\\D*(\\d{1,2})(?:\\s*(?::|h)\\s*(\\d{2}))?/i);\n  const min = m ? Number(m[1]) * 60 + Number(m[2] || 0) : NaN;\n  if (!m || Number(m[2] || 0) > 59 || min > 1440) { erros.push(`Tempos: ${rotulo} \"${texto}\" não é um horário válido. Use, por exemplo, 07:00`); return null; }\n  return min;\n};\nconst iniMin = horaDe(valorDe(kInicio, PADRAO.inicio, 'horário do primeiro tempo'), 'o horário do primeiro tempo');\n// O horário do último tempo é opcional na primeira página: sem o campo, usa o padrão sem avisar.\nconst fimMin = horaDe(kFim === null || vazio(inicial[kFim]) ? PADRAO.fim : inicial[kFim], 'o horário final');\nif (iniMin !== null && fimMin !== null && iniMin >= fimMin) erros.push(`Tempos: o horário final (${fmt(fimMin)}) deve ser depois do primeiro tempo (${fmt(iniMin)})`);\n \nconst tempos = [];\nif (!erros.length) {\n  for (let t = iniMin, n = 1; t + duracao <= fimMin; t += duracao, n++) tempos.push({ n, inicio: t, fim: t + duracao, rotulo: `${fmt(t)}–${fmt(t + duracao)}` });\n  if (!tempos.length) erros.push('Tempos: nenhum tempo cabe entre o primeiro horário e o fim informado');\n}\n \n// ------------------------------------------------------------ Restrições\n// Um campo por dia. O rótulo pode ser Segunda, Segunda-feira, Segunda:... (sem depender de acento ou maiúsculas).\nconst DIAS_BLOQUEIO = [['segunda', 'Seg'], ['terca', 'Ter'], ['quarta', 'Qua'], ['quinta', 'Qui'], ['sexta', 'Sex'], ['sabado', 'Sáb']];\nconst bloqueios = ler(NO_BLOQUEIOS);\nconst brutos = [];\nlet diasEncontrados = 0;\n \nfor (const [palavra, dia] of DIAS_BLOQUEIO) {\n  const chave = Object.keys(bloqueios || {}).find(k => norm(k).startsWith(palavra));\n  if (chave === undefined) continue;\n  diasEncontrados++;\n  for (const parte of String(bloqueios[chave] ?? '').trim().split(/\\s*(?:[,;\\n]|\\be\\b)\\s*/i)) {\n    if (!parte) continue;\n    const r = intervalo(parte);\n    if (r.erro) { erros.push(`Bloqueios, ${chave} \"${parte}\" ${r.erro}`); continue; }\n    brutos.push({ dia, inicio: Math.max(0, r.inicio - DESLOCAMENTO_ANTES), fim: r.fim });\n  }\n}\nif (!diasEncontrados) {\n  avisos.push(`Bloqueios: nenhum campo de dia foi encontrado. O nó \"${NO_BLOQUEIOS}\" ${bloqueios ? 'existe, mas sem campos de dia' : 'não foi encontrado'}; confira o nome em NO_BLOQUEIOS.`);\n} else if (!brutos.length && !erros.some(e => e.startsWith('Bloqueios'))) {\n  avisos.push('Bloqueios: todos os campos estão vazios; nenhum compromisso será considerado.');\n}\n \n// Junta blocos do mesmo dia que se sobrepõem ou se encostam.\nconst restricoes = [];\nbrutos.sort((a, b) => DIAS_BLOQUEIO.findIndex(d => d[1] === a.dia) - DIAS_BLOQUEIO.findIndex(d => d[1] === b.dia) || a.inicio - b.inicio);\nfor (const b of brutos) {\n  const ultimo = restricoes[restricoes.length - 1];\n  if (ultimo && ultimo.dia === b.dia && b.inicio <= ultimo.fim) ultimo.fim = Math.max(ultimo.fim, b.fim);\n  else restricoes.push({ ...b });\n}\n \n// --------------------------------------------------------------- Matérias\n// Cada página é uma matéria; cada campo \"Opção N:\" é uma turma:  Matéria;Professor;Dia;Horário[;Dia;Horário]\nconst DIAS = { seg: 'Seg', ter: 'Ter', qua: 'Qua', qui: 'Qui', sex: 'Sex', sab: 'Sáb' };\n \nfunction lerOpcao(texto) {\n  const partes = texto.split(';').map(p => p.trim());\n  while (partes.length && partes[partes.length - 1] === '') partes.pop();\n  if (partes.length < 4 || (partes.length - 2) % 2 !== 0) {\n    return { erro: `\"${texto}\" está fora do formato Matéria;Professor;Dia;Horário (repita Dia;Horário para mais dias)` };\n  }\n  const [nome, professor, ...resto] = partes;\n  if (!nome) return { erro: 'o nome da matéria está vazio' };\n \n  const blocos = [];\n  for (let i = 0; i < resto.length; i += 2) {\n    const dia = DIAS[norm(resto[i]).slice(0, 3)];\n    if (!dia) return { erro: `dia \"${resto[i]}\" não reconhecido (use Seg, Ter, Qua, Qui ou Sex)` };\n    const r = intervalo(resto[i + 1]);\n    if (r.erro) return { erro: `horário \"${resto[i + 1]}\" ${r.erro}` };\n    blocos.push({ dia, inicio: r.inicio, fim: r.fim });\n  }\n  const conflito = blocos.some((a, i) => blocos.some((b, j) => j > i && a.dia === b.dia && a.inicio < b.fim && b.inicio < a.fim));\n  return conflito ? { erro: 'dois horários se sobrepõem no mesmo dia' } : { nome, professor, blocos };\n}\n \nconst materias = [];\nfor (let k = 0; k < MAX_MATERIAS; k++) {\n  const pagina = NO_MATERIA + (k ? k : '');\n  const dados = ler(pagina);\n  if (!dados) continue; // página que o aluno não chegou a ver (marcou \"Finalizar\" antes)\n \n  // Campos opcionais da página: prioridade da matéria, turma preferida e o que fazer se ela não couber.\n  const outros = Object.keys(dados).filter(k => !/^opcao \\d/.test(norm(k)) && !/finalizar/.test(norm(k)));\n  const kSeNao = outros.find(k => /couber/.test(norm(k)));\n  const kTurma = outros.find(k => k !== kSeNao && /prefer/.test(norm(k)));\n  const kPrio = outros.find(k => k !== kSeNao && k !== kTurma && /priori/.test(norm(k)));\n  const textoDe = k => (k === undefined ? '' : norm(dados[k] ?? ''));\n  const prioridade = /obrig/.test(textoDe(kPrio)) ? 'obrigatoria' : /opcion/.test(textoDe(kPrio)) ? 'opcional' : 'preferida';\n  const numeroTurma = (textoDe(kTurma).match(/\\d/) || [])[0];\n  const seNaoCouber = /fora|deix/.test(textoDe(kSeNao)) ? 'fora' : 'aceitar';\n \n  let nome = null;\n  const opcoes = [];\n  for (let n = 1; n <= 5; n++) {\n    const campo = `Opção ${n}:`;\n    const texto = String(dados[campo] ?? '').trim();\n    if (!texto) continue;\n    const r = lerOpcao(texto);\n    if (r.erro) { erros.push(`${pagina}, ${campo} ${r.erro}`); continue; }\n    if (nome === null) nome = r.nome;\n    else if (norm(r.nome) !== norm(nome)) avisos.push(`${pagina}, ${campo} o nome \"${r.nome}\" é diferente de \"${nome}\"; foi usado \"${nome}\"`);\n    opcoes.push({ rotulo: `Opção ${n}`, professor: r.professor, blocos: r.blocos });\n  }\n  let turmaPreferida = null;\n  if (numeroTurma) {\n    turmaPreferida = `Opção ${numeroTurma}`;\n    if (!opcoes.some(o => o.rotulo === turmaPreferida)) {\n      avisos.push(`${pagina}: a turma preferida (${turmaPreferida}) não foi preenchida ou é inválida; a preferência foi ignorada`);\n      turmaPreferida = null;\n    }\n  }\n  if (opcoes.length) materias.push({ pagina, nome, opcoes, prioridade, turmaPreferida, seNaoCouber });\n  else erros.push(`${pagina}: nenhuma opção válida foi preenchida`);\n}\n \nreturn [{ json: {\n  ...item,\n  emailAluno: kEmail ? String(inicial[kEmail]).trim() : '',\n  tempos,\n  restricoes,\n  materias,\n  prioridades,\n  prioridadesTexto,\n  evitar,\n  evitarTexto,\n  observacoes,\n  preparoErros: erros,\n  preparoAvisos: avisos,\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3184,
+        0
+      ],
+      "id": "a968bab6-1760-4c46-a202-926a23dfcb53",
+      "name": "Preparar dados"
+    },
+    {
+      "parameters": {
+        "jsCode": "const NO_GERADOR = 'Gerador'; // nome do nó Code que gerou as grades candidatas\n \nconst resposta = $input.first().json;\nconst gerador = $(NO_GERADOR).first().json;\nconst candidatas = gerador.candidatas || [];\nconst candidatasParaIA = gerador.candidatasParaIA || [];\nconst familias = gerador.familias || [];\nconst maxPorFamilia = gerador.maxOpcoesPorFamilia || 3;\n \nconst avisos = [];\n \n// 1. Achar o texto da resposta.\nfunction acharTexto(obj) {\n  const caminhos = [\n    obj && obj.content && obj.content.parts,\n    obj && obj.candidates && obj.candidates[0] && obj.candidates[0].content && obj.candidates[0].content.parts,\n  ];\n  for (const parts of caminhos) {\n    if (Array.isArray(parts)) {\n      const t = parts.map(p => (p && p.text) || '').join('');\n      if (t.trim()) return t;\n    }\n  }\n  for (const k of ['output', 'text', 'response', 'message']) {\n    if (obj && typeof obj[k] === 'string' && obj[k].trim()) return obj[k];\n  }\n  const buscar = v => {\n    if (typeof v === 'string') return v.includes('opcoes') ? v : null;\n    if (v && typeof v === 'object') {\n      for (const x of Object.values(v)) {\n        const r = buscar(x);\n        if (r) return r;\n      }\n    }\n    return null;\n  };\n  return buscar(obj);\n}\n \n// 2. Ler o JSON, mesmo com cercas de markdown ou texto em volta.\nfunction lerJson(texto) {\n  if (!texto) return null;\n  let t = String(texto).trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  try { return JSON.parse(t); } catch (e) { /* tenta o recorte abaixo */ }\n  const a = t.indexOf('{');\n  const b = t.lastIndexOf('}');\n  if (a >= 0 && b > a) {\n    try { return JSON.parse(t.slice(a, b + 1)); } catch (e) { /* sem JSON válido */ }\n  }\n  return null;\n}\n \n// 3. Validar as opções por família.\nconst texto = acharTexto(resposta);\nconst json = lerJson(texto);\nconst opcoes = [];\nlet origem = 'ia';\n \nif (!json || !Array.isArray(json.opcoes)) {\n  avisos.push('A resposta da IA não pôde ser lida como JSON com \"opcoes\"; foram usadas opções automáticas');\n} else {\n  const usadas = new Set();\n  const porFamilia = {};\n  for (const o of json.opcoes) {\n    const c = Number(o && o.candidata);\n    if (!Number.isInteger(c) || c < 0 || c >= candidatas.length) {\n      avisos.push(`Opção ignorada: candidata \"${o && o.candidata}\" não existe`);\n      continue;\n    }\n    if (usadas.has(c)) {\n      avisos.push(`Opção ignorada: a candidata ${c} apareceu repetida`);\n      continue;\n    }\n    const f = candidatas[c].familia;\n    if ((porFamilia[f] || 0) >= maxPorFamilia) {\n      avisos.push(`Opção ignorada: a candidata ${c} passa do máximo de ${maxPorFamilia} opções da combinação ${f}`);\n      continue;\n    }\n    usadas.add(c);\n    porFamilia[f] = (porFamilia[f] || 0) + 1;\n    opcoes.push({\n      candidata: c,\n      familia: f,\n      titulo: String((o && o.titulo) || '').trim(),\n      resumo: String((o && o.resumo) || '').trim(),\n      tradeoffs: String((o && o.tradeoffs) || '').trim(),\n    });\n  }\n}\n \n// 4. Plano B: texto automático a partir das métricas.\nfunction automatica(indice) {\n  const c = candidatasParaIA[indice] || {};\n  const m = c.metricas || {};\n  const dias = (m.diasComAula || []).join(', ');\n  const partes = [`${m.materias} matéria(s), aulas das ${m.primeiraAula} às ${m.ultimaAula}`];\n  if (dias) partes.push(`dias com aula: ${dias}`);\n  partes.push(m.janelasMinutos ? `${m.janelasMinutos} min de janelas entre as aulas` : 'sem janelas entre as aulas');\n  return { candidata: indice, familia: c.familia, titulo: '', resumo: partes.join('. ') + '.', tradeoffs: '' };\n}\n \n// Completa cada família até o máximo de opções (as escolhas da IA sempre ficam; o código só preenche o que faltou,\n// usando as melhores grades ainda não escolhidas da própria família).\nconst temIA = opcoes.length > 0;\nif (temIA === false) origem = 'automatico';\nlet acrescentou = false;\nfor (const f of familias) {\n  const alvo = Math.min(f.maxOpcoes || maxPorFamilia, f.candidatas.length);\n  const daFamilia = opcoes.filter(o => o.familia === f.familia).length;\n  const livres = f.candidatas.filter(c => !opcoes.some(o => o.candidata === c));\n  const precisa = Math.max(0, alvo - daFamilia);\n  for (const c of livres.slice(0, precisa)) {\n    opcoes.push(automatica(c));\n    acrescentou = true;\n  }\n  if (temIA && precisa) {\n    avisos.push(daFamilia\n      ? `A IA escolheu ${daFamilia} grade(s) da combinação ${f.familia}; o código completou até ${alvo}`\n      : `A IA não escolheu nenhuma grade da combinação ${f.familia}; foram acrescentadas as melhores opções dela`);\n  }\n}\nif (temIA && acrescentou) origem = 'ia+automatico';\nopcoes.sort((a, b) => a.familia - b.familia);\n \nreturn [{ json: {\n  opcoes,\n  origemOpcoes: origem,\n  validacaoAvisos: avisos,\n  temOpcoes: opcoes.length > 0,\n  candidatas,\n  familias,\n  estagio: gerador.estagio || [],\n  tempos: gerador.tempos || [],\n  emailAluno: gerador.emailAluno || '',\n  prioridadesTexto: gerador.prioridadesTexto || [],\n  evitarTexto: gerador.evitarTexto || [],\n  observacoes: gerador.observacoes || '',\n  avisosAluno: gerador.avisosAluno || [],\n  // Problemas das etapas anteriores, para o e-mail explicar quando não há nenhuma grade possível.\n  problemas: [...(gerador.preparoErros || []), ...(gerador.geradorErros || []), ...(gerador.preparoAvisos || []), ...(gerador.geradorAvisos || [])],\n} }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4064,
+        0
+      ],
+      "id": "5a3a33fe-4ab5-4910-93b6-a1ee125d5d78",
+      "name": "Montar saida"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Finalizar!",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Finalizei minha grade!"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1360,
+        96
+      ],
+      "id": "52955eb9-2477-431d-84c8-8ceb05d19c71",
+      "name": "Matéria1",
+      "webhookId": "7c660c30-b1b7-4a75-a916-1c1275fdb483"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Finalizar!",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Finalizei minha grade!"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1728,
+        112
+      ],
+      "id": "be233523-3781-4e55-ac30-75dc3d47c2d2",
+      "name": "Matéria2",
+      "webhookId": "0e9ce3d7-dea9-4cb8-ab2b-ee466f0c31f1"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Finalizar!",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Finalizei minha grade!"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        2096,
+        128
+      ],
+      "id": "6f8f8d95-12da-4313-825f-7c88c9dce990",
+      "name": "Matéria3",
+      "webhookId": "48fe7234-18cd-4050-8b34-ff8e16a7be51"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Finalizar!",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Finalizei minha grade!"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        2480,
+        144
+      ],
+      "id": "4ced6cbc-3e6a-4e5a-833a-e82e5ccfa020",
+      "name": "Matéria4",
+      "webhookId": "9b1ba5c5-7a0a-4324-a41e-6e7c8d48bf2f"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Opção 1:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 2:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 3:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 4:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Opção 5:",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Prioridade da matéria:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Obrigatória"
+                  },
+                  {
+                    "option": "Preferida"
+                  },
+                  {
+                    "option": "Opcional"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Turma preferida:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Nenhuma"
+                  },
+                  {
+                    "option": "Opção 1"
+                  },
+                  {
+                    "option": "Opção 2"
+                  },
+                  {
+                    "option": "Opção 3"
+                  },
+                  {
+                    "option": "Opção 4"
+                  },
+                  {
+                    "option": "Opção 5"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Se a preferida não couber:",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Aceitar outra turma"
+                  },
+                  {
+                    "option": "Deixar a matéria de fora"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        2848,
+        160
+      ],
+      "id": "d580ca1e-6133-4db9-8498-92ecd1c76614",
+      "name": "Matéria5",
+      "webhookId": "fffe362d-399b-44cc-aa6b-5cdc02c56c22"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Informações Iniciais": {
+      "main": [
+        [
+          {
+            "node": "Bloqueios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instruções": {
+      "main": [
+        [
+          {
+            "node": "Matéria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matéria": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Matéria1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Matéria2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Matéria3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Matéria4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Matéria5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form": {
+      "main": [
+        []
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Validar IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar IA": {
+      "main": [
+        [
+          {
+            "node": "Montar saida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerador": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bloqueios": {
+      "main": [
+        [
+          {
+            "node": "Instruções",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar dados": {
+      "main": [
+        [
+          {
+            "node": "Gerador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar saida": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matéria1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matéria2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matéria3": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Matéria5": {
+      "main": [
+        [
+          {
+            "node": "Preparar dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "50f03a8b-e171-469f-abae-98caad20bc87",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5e811063ffd109f0ffdbd31706383dea8c406af72fdea81569e88cb6f69031ce"
+  },
+  "nodeGroups": [],
+  "id": "vymFwmB38rTlpmQo",
+  "tags": []
+}
